@@ -1,0 +1,41 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h1>Unicorns</h1>
+        <ul id="unicorns">  
+        </ul>
+        <script>
+            // let position = ['barn', 'pasture', 'trails'];
+            let unicorns = [];
+            // let unicornPosition = locations[0];
+            let markup = ``;
+            function unicorn(name, colour, position){
+                this.name = name;
+                this.colour = colour;
+                this.position = position;
+            }
+
+            unicorns.push(new unicorn('brook', 'purple', 'barn'));
+            unicorns.push(new unicorn('dominic', 'orange', 'barn'));
+
+            for(i = 0; i < unicorns.length; i++){
+                markup += `
+                    <li>
+                        <span id="unicorn">${unicorns[i].name} </span>
+                            <span>
+                                <input type="radio" id="barn" name="position${i}" value="barn">
+                                <label for="barn">Barn</label><br>
+                                <input type="radio" id="pasture" name="position${i}" value="pasture">
+                                <label for="pasture">Pasture</label><br>
+                                <input type="radio" id="trail" name="position${i}" value="trail">
+                                <label for="trail">Trail</label>
+                            </span>
+                    </li>
+                        `;
+            }
+            document.getElementById('unicorns').innerHTML = markup;
+        </script>
+    </body>
+</html>
