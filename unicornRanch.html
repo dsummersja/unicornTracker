@@ -1,15 +1,28 @@
 <html>
     <head>
+        <title>Unicorn Tracker</title>
+        <style>
+            ul {
+                list-style-type: none;
+            }
+            .names {
+                font-size: 1.5em;;
+            }
+            li, h1 {
+                padding: 20px;
+            }
+            li:nth-child(even) {
+                background-color: bisque;
+            }
 
+        </style>
     </head>
     <body>
         <h1>Unicorns</h1>
         <ul id="unicorns">  
         </ul>
         <script>
-            // let position = ['barn', 'pasture', 'trails'];
             let unicorns = [];
-            // let unicornPosition = locations[0];
             let markup = ``;
             function unicorn(name, colour, position){
                 this.name = name;
@@ -17,25 +30,37 @@
                 this.position = position;
             }
 
-            unicorns.push(new unicorn('brook', 'purple', 'barn'));
-            unicorns.push(new unicorn('dominic', 'orange', 'barn'));
+            // api url 
+            const api_url = "https://api.jsonbin.io/b/5f74c7987243cd7e82474b27/2"; 
+            
+            // Defining async function 
+            async function getapi(url) { 
+                // Storing response 
+                const response = await fetch(url); 
+                // Storing data in form of JSON 
+                var data = await response.json(); 
+                console.log(data);
+                show(data); 
+            } 
 
-            for(i = 0; i < unicorns.length; i++){
+            // Calling that async function 
+            getapi(api_url); 
+ 
+            function show(data) { 
+                for(i = 0; i < data.unicorns.length; i++){
                 markup += `
-                    <li>
-                        <span id="unicorn">${unicorns[i].name} </span>
-                            <span>
-                                <input type="radio" id="barn" name="position${i}" value="barn">
-                                <label for="barn">Barn</label><br>
-                                <input type="radio" id="pasture" name="position${i}" value="pasture">
-                                <label for="pasture">Pasture</label><br>
-                                <input type="radio" id="trail" name="position${i}" value="trail">
-                                <label for="trail">Trail</label>
-                            </span>
+                    <li class="unicorn">
+                        <div class="names" id="unicorn">${data.unicorns[i].name} </div>
+                        <select name="unicorns" id="location">  
+                            <option value="Barn" ${data.unicorns[i].position == 'Barn' ? 'selected' : ''}>Barn</option>
+                            <option value="Pasture" ${data.unicorns[i].position == 'Pasture' ? 'selected' : ''}>Pasture</option>
+                            <option value="Trail" ${data.unicorns[i].position == 'Trail' ? 'selected' : ''}>Trail</option>
+                        </select>
                     </li>
-                        `;
+                        `;    
             }
             document.getElementById('unicorns').innerHTML = markup;
+            }
         </script>
     </body>
 </html>
